@@ -1,0 +1,2 @@
+#' @title statanacoseq-package
+
