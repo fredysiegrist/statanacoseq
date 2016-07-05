@@ -23,7 +23,7 @@
 #' @export
 mylist <- function(RNAfile=system.file("extdata",	"Etef.sample.transcript.fasta",	package	=	"statanacoseq"), AAfile=system.file("extdata",	"Etef.sample.protein.fasta",	package	=	"statanacoseq"), whatout=0) {
   require(seqinr)
-  if (whatout==0) return( list(myseq <- read.fasta(file = RNAfile), myaa <- read.fasta(file = AAfile) ) )
-  if (whatout==1) return( read.fasta(file = RNAfile) )
-  if (whatout==2) return( read.fasta(file = AAfile) )
+  if (whatout==0) return( list(myseq <- read.fasta(file = RNAfile, seqtype="DNA"), myaa <- read.fasta(file = AAfile, seqtype="AA") ) )
+  if (whatout==1) return( read.fasta(file = RNAfile, seqtype="DNA") )
+  if (whatout==2) return( read.fasta(file = AAfile, seqtype="AA") )
 }
