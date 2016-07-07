@@ -19,6 +19,7 @@
 #' @keywords CodonBias
 #' @examples
 #' ComputeFop('ATGTGGTACTCCGACTACGGAGGATAA', ref='tRNAgene', codonusagec=Tef)
+#' ComputeFop(c2s(mylist(whatout=1)[[1]]), ref='mostcommon', codonusagec=CodonUsage())
 #'
 #' @import seqinr
 #'
