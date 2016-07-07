@@ -4,10 +4,12 @@
 \alias{checkCDS}
 \title{Checks Integrity of CDS Sequence}
 \usage{
-checkCDS(cds)
+checkCDS(cds, ignore = FALSE)
 }
 \arguments{
 \item{cds}{Sequence to be checked     # may be implemented as list List of Coding Sequences as read.fasta input}
+
+\item{ignore}{If TRUE returns TRUE even in case of biological violations (as for stop codons in sequence).}
 }
 \value{
 TRUE if all checks are passed with or without warnings, FALSE if an violation is found

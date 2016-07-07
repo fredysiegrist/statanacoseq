@@ -20,5 +20,10 @@
 #'
 #' @export
 reversecomplement <- function(codon) {
-  toupper(c2s(rev(comp(s2c(codon)))))
+  if (codon=="???") {
+    return("???")
+    }
+  else {
+  return(toupper(c2s(rev(comp(s2c(codon))))))
+  }
 }
