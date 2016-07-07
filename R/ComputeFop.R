@@ -25,7 +25,7 @@
 #' @export
 
 ComputeFop <- function(cds, db, ref=c('tRNAgene','mostcommon'), codonusagec=NULL) {
-  if(!(nchar(cds) %% 3 == 0)) {stop("CDS is not splittable in codons (blocks of 3 characters)", call.=FALSE)}
+  if(!(checkCDS(cds))) {stop("non valid CDS)", call.=FALSE)}
   else {
    if (ref=='mostcommon' && is.null(codonusagec)) {codonusagec <- CodonUsage(db) }
    try(if((is.null(codonusagec)) && ref=='tRNAgene') {stop("Please indicate tRNAgene counts as codonusagec parameter", call.=FALSE)})
