@@ -18,7 +18,7 @@
 #' @keywords CodonBias
 #' @examples
 #' ComputeNEC('ATGTGGTACTCCGACTACGGAGGATAA')
-#' ComputeNEC2(c2s(mylist(whatout=1)[[1]]))
+#' ComputeNEC(c2s(mylist(whatout=1)[[1]]))
 #'
 #' @import seqinr
 #'
@@ -26,6 +26,7 @@
 ComputeNEC <- function(cds) {
   if(!(checkCDS(cds))) {stop("non valid CDS)", call.=FALSE)}
   else {
+    cds <- toupper(cds)
     cod <- rep(0, times=64)
     names(cod) <- sapply(as.character(Tef$codons), reversecomplement)
     cod <- cod[c(-59, -60, -64)]

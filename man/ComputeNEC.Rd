@@ -24,7 +24,7 @@ is a sum of average homozygosities for different redundency classes.
 }
 \examples{
 ComputeNEC('ATGTGGTACTCCGACTACGGAGGATAA')
-ComputeNEC2(c2s(mylist(whatout=1)[[1]]))
+ComputeNEC(c2s(mylist(whatout=1)[[1]]))
 
 }
 \author{
