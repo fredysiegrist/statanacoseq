@@ -3,14 +3,14 @@ Title: Statistical Analyses of Codon Usage in Custom Genome Sequences
 Version: 0.0.0.9000
 Published: 2016
 Authors@R: c(person("Fredy", "Siegrist", email = "fredy.siegrist@students.unibe.ch", role = c("aut", "trl", "cph")), person("Gina", "Cannarozzi", email = "gina@cannarozzi.com", role = c("ths", "com", "cre")), person("Zerihun", "Tadele", email = "zerihun.tadele@ips.unibe.ch", role = c("ctb")))
-Description: Compute CAI for all AA and give out as a list.
- Instead of giving just out the CAI value. First: Frequency of optimal codons Fop.
+Description: Compute CAI for all AA and give out as a list. Instead of giving
+    just out the CAI value. First: Frequency of optimal codons Fop.
 Depends:
     R (>= 3.3.0)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 5.0.1.9000
+RoxygenNote: 5.0.1
 Imports:
     seqinr (>= 3.1)
 Suggests:

@@ -1,2 +1,3 @@
 plotOCU	Plots the Codon Optimality Score for Each Aminoacid in the Eragostis tef Sample Set with Moving Averages
 Fop Computes the Frequency of Optimal Codons in the Eragostis tef Sample Set
+NEC Computes the Overall Number of Effective Codons in the Eragostis tef Sample Set

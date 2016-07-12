@@ -2,6 +2,7 @@
 
 export(CodonUsage)
 export(ComputeFop)
+export(ComputeNEC)
 export(anticodoncount)
 export(areopts)
 export(checkCDS)
