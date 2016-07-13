@@ -26,45 +26,28 @@
 ComputeNEC <- function(cds) {
   if(!(checkCDS(cds))) {stop("non valid CDS)", call.=FALSE)}
   else {
-    cds <- toupper(cds)
+    cds <- tolower(cds)
     cod <- rep(0, times=64)
     names(cod) <- sapply(as.character(Tef$codons), reversecomplement)
     cod <- cod[c(-59, -60, -64)]
     aa <- rep(0, times=20)
     names(aa) <- levels(Tef[,1])[c(-16,-18)]
-    avoid <- c('TAA', 'TAG', 'TGA') # stop codons $ are ommited by definition
-    count <- 0
-    for (i in seq(1, nchar(cds), 3)) {
-      codon <- substr(cds, i, i+2)
-      if (!(codon %in% avoid)) {
-          cod[codon] <- cod[codon]+1
-          aa[aaa(translate(s2c(codon)))] <- aa[aaa(translate(s2c(codon)))]+1
-          count <- count+1
-      }
-    }
-    Nc <- 0
-    for (i in names(aa)) {
-      Acods <- sapply(as.character(Tef[,2]), reversecomplement)[Tef[,1]==i]
-      k <- length(Acods)
-      if (k<2) {
-        Nc <- Nc+1
-      }
-      else {
-        n <- sum(cod[Acods])
-        S <- sum(sapply(cod[Acods], function(x) (x/n)^2))
-        F <- (n*S-1) / (n-1)
-        Nc <- Nc+(1/F)
-      }
-    }
-    return(Nc)
+    cods <- count(s2c(cds), word = 3, by=3)
+    cod[names(cod)] <- as.vector(cods[tolower(names(cod))])
+    AA <- table(translate(s2c(cds)))
+    aa[names(aa)] <- AA[a(names(aa))]
+    NC <- rep(1, times=length(aa))
+    names(NC) <- names(aa)
+    Acods <- sapply(names(NC), function(i) sapply(as.character(Tef[,2]), reversecomplement)[Tef[,1]==i])
+    contributors <- names(aa)[sapply(Acods, length)>1&aa>1]
+    Nc <- sapply(contributors, function(i) {
+     n <- sum(cod[unlist(Acods[i])])
+     S <- sum(sapply(cod[unlist(Acods[i])], function(x) (x/n)^2))
+     F <- (n*S-1) / (n-1)
+     return(1/F)
+     }
+    )
+    NC[contributors] <- Nc[contributors]
+    return(sum(NC))
   }
 }
-
-
-#ComputeNEC2 <- function(cds) {
-#  if(!(checkCDS(cds))) {stop("non valid CDS)", call.=FALSE)}
-#  else {
-#    cod <- count(cd, word = 3, by=3)
-#    aa <- table(translate(s2c(cds)))
-#  }
-#}
