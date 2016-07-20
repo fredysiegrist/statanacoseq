@@ -26,9 +26,9 @@ checkCDS <- function(cds, ignore=FALSE) {
   # madatory check if cds is dividable in codons
   if(!(cdslength %% 3 == 0)) {warning("CDS is not splittable in codons (blocks of 3 characters)"); return(FALSE)}
   # optional check if cds start with the start codon
-  if(!(toupper(substring(cds, 1, 3))=="ATG")) {warning("CDS does not start with ATG)")}
+  if(!(toupper(substring(cds, 1, 3))=="ATG")) {warning("CDS does not start with ATG")}
   # optional check if cds ends on a stop codon
-  if(!(toupper(substring(cds, cdslength-2, cdslength)) %in% c('TAA', 'TAG', 'TGA'))) {warning("CDS does not end with stop codon)")}
+  if(!(toupper(substring(cds, cdslength-2, cdslength)) %in% c('TAA', 'TAG', 'TGA'))) {warning("CDS does not end with stop codon")}
   # mandatory check if cds contains stop codons
   if("*" %in% getTrans(s2c(cds))[1:((cdslength/3)-1)]) {warning("CDS is not a Open Reading Frame"); return(ignore)}
 
