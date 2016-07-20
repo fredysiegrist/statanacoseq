@@ -23,6 +23,36 @@
 #' @import seqinr
 #'
 #' @export
+#' @section Original code in Darwin:
+#' \subsection{Effective number of codons* (Wright 1990, *Fuglsang 2004).  AR (April 2007)}{\preformatted{
+#' ComputeNEC := proc(d:string)
+#'  cod:=CreateArray(1..64);
+#'  aa:=CreateArray(1..20);
+#'  aviod:={op(AToCodon('$'))};
+#'  count:=0;
+#'  for i to length(d) by 3 do
+#'    c := d[i..i+2];
+#'    if not member(c,aviod) then
+#'      ai:=CodonToInt(c);
+#'      ci:=CodonToCInt(c);
+#'      cod[ci]:=cod[ci]+1;
+#'      aa[ai]:=aa[ai]+1;
+#'      count:=count+1;
+#'    fi;
+#'  od;
+#'
+#'  Nc:=0;
+#'  for i to 20 do
+#'    Acods := IntToCInt(i);
+#'    k := length(Acods);
+#'    if k<2 then Nc := Nc + 1; next; fi;
+#'    n := sum([seq(cod[Acods[x]], x=1..k)]);
+#'    S := sum([seq((cod[Acods[x]]/n)^2, x=1..k)]);
+#'    F := (n*S-1) / (n-1);
+#'    Nc := Nc + 1/F;
+#'  od;
+#'  Nc;
+#' end: } }
 ComputeNEC <- function(cds) {
   if(!(checkCDS(cds))) {stop("non valid CDS)", call.=FALSE)}
   else {

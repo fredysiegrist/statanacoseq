@@ -22,6 +22,38 @@ Where in the first case only one codon is used per amino acid, and in the latter
 Highly expressed genes should use fewer codons due to selection away from equal use. The here computed overall number of effective codons for a gene
 is a sum of average homozygosities for different redundency classes.
 }
+\section{Original code in Darwin}{
+
+\subsection{Effective number of codons* (Wright 1990, *Fuglsang 2004).  AR (April 2007)}{\preformatted{
+ComputeNEC := proc(d:string)
+ cod:=CreateArray(1..64);
+ aa:=CreateArray(1..20);
+ aviod:={op(AToCodon('$'))};
+ count:=0;
+ for i to length(d) by 3 do
+   c := d[i..i+2];
+   if not member(c,aviod) then
+     ai:=CodonToInt(c);
+     ci:=CodonToCInt(c);
+     cod[ci]:=cod[ci]+1;
+     aa[ai]:=aa[ai]+1;
+     count:=count+1;
+   fi;
+ od;
+
+ Nc:=0;
+ for i to 20 do
+   Acods := IntToCInt(i);
+   k := length(Acods);
+   if k<2 then Nc := Nc + 1; next; fi;
+   n := sum([seq(cod[Acods[x]], x=1..k)]);
+   S := sum([seq((cod[Acods[x]]/n)^2, x=1..k)]);
+   F := (n*S-1) / (n-1);
+   Nc := Nc + 1/F;
+ od;
+ Nc;
+end: } }
+}
 \examples{
 ComputeNEC('ATGTGGTACTCCGACTACGGAGGATAA')
 ComputeNEC(c2s(mylist(whatout=1)[[1]]))
