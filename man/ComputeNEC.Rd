@@ -63,7 +63,7 @@ ComputeNEC(c2s(mylist(whatout=1)[[1]]))
 Roth, A.; Siegrist, F. and Cannarozzi, G. M. \email{gina@cannarozzi.com}
 }
 \seealso{
-\code{\link{seqinr}} \code{\link{statanacoseq}} \url{http://gtrnadb.ucsc.edu/GtRNAdb2/} \code{\link{readstats}}
+\code{\link{seqinr}} \code{\link[vhica]{CUB}} \code{\link{statanacoseq}} \url{http://gtrnadb.ucsc.edu/GtRNAdb2/} \code{\link{readstats}}
 }
 \keyword{CodonBias}
 

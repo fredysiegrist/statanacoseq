@@ -14,7 +14,7 @@
 #' @return Numerical value for effective number of codons Nc (by the original definition)
 #'
 #' @author Roth, A.; Siegrist, F. and Cannarozzi, G. M. \email{gina@@cannarozzi.com}
-#' @seealso \code{\link{seqinr}} \code{\link{statanacoseq}} \url{http://gtrnadb.ucsc.edu/GtRNAdb2/} \code{\link{readstats}}
+#' @seealso \code{\link{seqinr}} \code{\link{vhica::CUB}} \code{\link{statanacoseq}} \url{http://gtrnadb.ucsc.edu/GtRNAdb2/} \code{\link{readstats}}
 #' @keywords CodonBias
 #' @examples
 #' ComputeNEC('ATGTGGTACTCCGACTACGGAGGATAA')
