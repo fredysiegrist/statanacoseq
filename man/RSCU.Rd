@@ -13,7 +13,7 @@ RSCU(cds)
 Named (codons) numerical vector with relative synonymous codon usage for the 64 codons
 }
 \description{
-\code{ComputeNEC} is a method for measuring synonymous codon usage bias in a gene by estimation of the “effective number of codons” Nc
+\code{RSCU} Returns Relative Synonymous Codon Usage Similar tp SeqinR
 }
 \details{
 Should compute the same RSCU as seqinr.
