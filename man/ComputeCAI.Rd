@@ -70,8 +70,8 @@ ComputeCAIVector := proc(e:Entry)
 end: } }
 }
 \examples{
-ComputeCAI('ATGTGGTACTCCGACTACGGAGGATAA')
-ComputeCAI(c2s(mylist(whatout=1)[[1]]))
+ComputeCAI('ATGTGGTACTCCGACTACGGAGGATAA', RA=SetupRA("yeast"))
+ComputeCAI(c2s(mylist(whatout=1)[[1]]), RA=ComputeCarboneRA(DB=mylist(whatout=1)))
 
 }
 \author{

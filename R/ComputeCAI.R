@@ -13,8 +13,8 @@
 #' @seealso \code{\link{seqinr}} \code{\link[seqinr]{cai}} \code{\link{statanacoseq}} \code{\link{checkCDS}}
 #' @keywords CodonBias
 #' @examples
-#' ComputeCAI('ATGTGGTACTCCGACTACGGAGGATAA')
-#' ComputeCAI(c2s(mylist(whatout=1)[[1]]))
+#' ComputeCAI('ATGTGGTACTCCGACTACGGAGGATAA', RA=SetupRA("yeast"))
+#' ComputeCAI(c2s(mylist(whatout=1)[[1]]), RA=ComputeCarboneRA(DB=mylist(whatout=1)))
 #'
 #' @import seqinr
 #'
@@ -73,23 +73,26 @@ ComputeCAI <- function(cds, RA) {
   if(!(checkCDS(cds))) {stop("non valid CDS)", call.=FALSE)}
   else {
     if (missing(RA)) {
-      stop('Error in ComputeCAI: RA not assigned, use e.g. RA=SetupRA(yeast)', call. = FALSE)
+      stop('Error in ComputeCAI: RA not assigned, use e.g. RA=SetupRA("yeast")', call. = FALSE)
     }
-
-    dna <- toupper(cds) # SearchTag('DNA', e);
-    wa <- 1:20
-    na <- 1:20
+    a.uni <- unique(a(substr(names(aa_ac), 1, 3)[c(-59, -60, -64, -65)]))
+    dna <- toupper(cds)
+    if(!(checkCDS(dna))) stop("non valid CDS)", call.=FALSE)
+    wa <- rep(0, times=20)
+    na <- rep(0, times=20)
     for (j in seq(from=1, to=nchar(dna), by=3)) {
-      cint <- CodonToCInt(dna[j..j+2]);
-      a <- CIntToInt(cint);
+      codon <- reversecomplement(substr(dna, j, j+2))
+      cint <- which(substr(names(aa_ac), 5, 7) %in% codon)
+      if (cint == 65) break # to avoid XXX
+      a <- which(a.uni %in% a(substr(names(aa_ac), 1, 3)[cint]))
       if (a <= 20) {
-        wa[a] <- wa[a] + ln(RA[cint])
+        wa[a] <- wa[a] + log(RA[cint])
         na[a] <- na[a]+1
       }
     }
-    res <- 1:21
+    res <- rep(NA, times=21)
     for (i in 1:20) {
-      res[i] <- NA #If(na[i]=0, 'NA', exp(1/na[i] * wa[i])) od;
+      if(!(na[i]==0)) res[i] <- exp(1/na[i] * wa[i])
     }
     res[21] <- exp(1/sum(na) * sum(wa))
     return(res)
