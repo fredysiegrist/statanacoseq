@@ -4,10 +4,14 @@
 \alias{ComputeCAI}
 \title{Codon Adaptation Index}
 \usage{
-ComputeCAI(cds, RA)
+ComputeCAI(cds, RA, UseCodonProb = FALSE)
 }
 \arguments{
 \item{cds}{Coding sequence in reading frame}
+
+\item{RA}{Relative Adaptiveness table to use}
+
+\item{UseCodonProb}{Wheter to use Codon Probabilities (default = FALSE)}
 }
 \value{
 Numerical with CAI
@@ -46,32 +50,11 @@ ComputeCAI := proc(DNA:{string, Entry})
    w := w + ln(codprob * RA[cint]) fi;
  od;
  exp(1/n * w)
-end:
-
-ComputeCAIVector := proc(e:Entry)
- if not assigned(RA) then
-   error('Error in ComputeCAI: RA not assigned, use e.g. SetupRA(yeast);') fi;
- dna := SearchTag('DNA', e);
- wa := CreateArray(1..20);
- na := CreateArray(1..20);
- for j to length(dna) by 3 do
-   cint := CodonToCInt(dna[j..j+2]);
-   a := CIntToInt(cint);
-   if a <= 20 then
-     wa[a] := wa[a] + ln(RA[cint]);
-     na[a] := na[a]+1;
-   fi;
- od;
- res := CreateArray(1..21);
- for i to 20 do
-   res[i] := If(na[i]=0, 'NA', exp(1/na[i] * wa[i])) od;
- res[21] := exp(1/sum(na) * sum(wa));
- res
 end: } }
 }
 \examples{
-ComputeCAI('ATGTGGTACTCCGACTACGGAGGATAA', RA=SetupRA("yeast"))
-ComputeCAI(c2s(mylist(whatout=1)[[1]]), RA=ComputeCarboneRA(DB=mylist(whatout=1)))
+ComputeCAI('ATGTGGTACTCCGACTACGGAGGATAA', RA=SetupRA("yeast"), UseCodonProb=TRUE)
+ComputeCAI(mylist(whatout=1)[[1]], RA=ComputeCarboneRA(DB=mylist(whatout=1)))
 
 }
 \author{
