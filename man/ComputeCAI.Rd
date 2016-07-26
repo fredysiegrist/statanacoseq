@@ -16,7 +16,7 @@ Numerical with CAI
 \code{ComputeCAI} Computes Codon Adaptation Index
 }
 \details{
-Should compute the same ComputeCAI or ComputeCAIVector as in Darwin.
+Should compute the same ComputeCAI or ComputeCAIVector as in Darwin and the cai of seqinr package.
 }
 \section{Original code in Darwin}{
 
@@ -78,7 +78,7 @@ ComputeCAI(c2s(mylist(whatout=1)[[1]]))
 Roth, A.; Friberg, M.; Siegrist, F. and Cannarozzi, G. M. \email{gina@cannarozzi.com}
 }
 \seealso{
-\code{\link{seqinr}} \code{\link{statanacoseq}} \code{\link{readstats}}
+\code{\link{seqinr}} \code{\link[seqinr]{cai}} \code{\link{statanacoseq}} \code{\link{checkCDS}}
 }
 \keyword{CodonBias}
 

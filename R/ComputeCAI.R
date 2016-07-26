@@ -4,13 +4,13 @@
 #' \code{ComputeCAI} Computes Codon Adaptation Index
 #'
 #' @details
-#' Should compute the same ComputeCAI or ComputeCAIVector as in Darwin.
+#' Should compute the same ComputeCAI or ComputeCAIVector as in Darwin and the cai of seqinr package.
 #'
 #' @param cds Coding sequence in reading frame
 #' @return Numerical with CAI
 #'
 #' @author Roth, A.; Friberg, M.; Siegrist, F. and Cannarozzi, G. M. \email{gina@@cannarozzi.com}
-#' @seealso \code{\link{seqinr}} \code{\link{statanacoseq}} \code{\link{readstats}}
+#' @seealso \code{\link{seqinr}} \code{\link[seqinr]{cai}} \code{\link{statanacoseq}} \code{\link{checkCDS}}
 #' @keywords CodonBias
 #' @examples
 #' ComputeCAI('ATGTGGTACTCCGACTACGGAGGATAA')
