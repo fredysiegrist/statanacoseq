@@ -5,7 +5,7 @@
 \title{Compute Carbone Relative Adaptiveness}
 \usage{
 ComputeCarboneRA(t = 0.01, initfrac = 1, iterfrac = 0.5,
-  mode = "reverse")
+  mode = "reverse", DB)
 }
 \arguments{
 \item{t}{nonnegative}
@@ -13,6 +13,8 @@ ComputeCarboneRA(t = 0.01, initfrac = 1, iterfrac = 0.5,
 \item{initfrac}{nonnegative}
 
 \item{mode}{"reverse" for standard anything else for non-standard}
+
+\item{DB}{Database with working genes of type Entires()}
 
 \item{interfrac}{nonnegative}
 }
@@ -25,6 +27,35 @@ Named (codons) numerical vector with relative synonymous codon usage for the 64 
 \details{
 Should compute the same RA in Darwin
 }
+\section{Original code in Darwin}{
+
+\subsection{Compute Carbone Relative Adaptiveness}{\preformatted{
+ComputeCarboneRA := proc( ; t=0.01:nonnegative, initfrac=1:nonnegative, iterfrac=0.5:nonnegative, mode:string)
+ global RA;
+ if not assigned(DB) then error('DB must be assigned') fi;
+ x := 1;  # fraction of the sequences used to compute RA in this iteration
+ AllGenes := [seq(i, i=1..DB[TotEntries])]:
+ genes := Shuffle(AllGenes)[1..round(initfrac * DB[TotEntries])]:
+ bestCorr := 0;
+ cai := CreateArray(1..DB[TotEntries]):
+ while length(genes) / DB[TotEntries] > t do
+   RA := RelativeAdaptiveness(genes);
+   for i to DB[TotEntries] do
+     dna:=SearchTag('DNA',Entry(i));
+     if SearchString('X', dna)<>-1 then next fi;
+     cai[i] := ComputeCAI(dna) od;
+   x := x * iterfrac;
+   res := transpose([AllGenes, cai]):
+   if mode='reverse' then
+     res := transpose(sort(res, res -> res[2])):
+   else
+     res := transpose(sort(res, res -> -res[2])):
+   fi;
+   genes := res[1][1..round(x * DB[TotEntries])]:
+ od;
+RA
+end: } }
+}
 \examples{
 ComputeCarboneRA()
 
@@ -33,7 +64,7 @@ ComputeCarboneRA()
 Roth, A.; Friberg, M.; Siegrist, F. and Cannarozzi, G. M. \email{gina@cannarozzi.com}
 }
 \seealso{
-\code{\link{RelativeAdaptiveness}} \code{\link{statanacoseq}} \code{\link{SetupRA}}
+\code{\link{RelativeAdaptiveness}} \code{\link{statanacoseq}} \code{\link{SetupRA}}  \code{\link{Entries}}
 }
 \keyword{CodonBias}
 
