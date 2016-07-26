@@ -6,10 +6,10 @@
 #' @details
 #' Should compute the same RA in Darwin
 #'
-#' @param t nonnegative
+#' @param target nonnegative
 #' @param initfrac nonnegative
 #' @param interfrac nonnegative
-#' @param mode "reverse" for standard anything else for non-standard
+#' @param reverse For standard anything else for non-standard
 #' @param DB Database with working genes of type Entires()
 #' @return Named (codons) numerical vector with relative synonymous codon usage for the 64 codons
 #'
@@ -17,7 +17,7 @@
 #' @seealso \code{\link{RelativeAdaptiveness}} \code{\link{statanacoseq}} \code{\link{SetupRA}}  \code{\link{Entries}}
 #' @keywords CodonBias
 #' @examples
-#' ComputeCarboneRA()
+#' ComputeCarboneRA(DB=mylist(whatout=1))
 #'
 #' @export
 #' @section Original code in Darwin:
@@ -47,30 +47,25 @@
 #'  od;
 #' RA
 #' end: } }
-ComputeCarboneRA <- function(t=0.01, initfrac=1, iterfrac=0.5, mode='reverse', DB) {
+ComputeCarboneRA <- function(target=0.05, initfrac=1, iterfrac=0.5, reverse=FALSE, DB) {
+  if (!(is.double(target) && length(target)==1 && target>(1/length(DB)) && target<1)) stop('target must be a positive number between 1/length(DB) and 1', call.=FALSE)
   RA <- NA
   if(missing(DB)) stop('DB must be assigned', call.=FALSE)
   x <- 1  # fraction of the sequences used to compute RA in this iteration
   AllGenes <- 1:length(DB)
-  genes <- sample(DB, round(initfrac * length(DB)))
-  bestCorr <- 0
-  cai <- 1:length(DB)
-  while((length(genes) / length(DB)) > t) {
-    RA <- RelativeAdaptiveness(genes)
+  genes <- sample(AllGenes, round(initfrac * length(DB)))
+  cai <- rep(NA, times=length(DB))
+  while((length(genes) / length(DB)) > target) {
+    suppressWarnings(RA <- RelativeAdaptiveness(DB[sapply(genes, function(j) attr(DB[[j]], "name"))]))
     for (i in 1:length(DB)) {
       dna <- c2s(DB[[i]])
       if (length(grep("n", dna)) == 1 | length(grep("x", dna)) == 1 ) break
-      cai[i] <- ComputeCAI(dna, RA=RA)
+      suppressWarnings(cai[i] <- ComputeCAI(dna, RA=RA))
     }
-      x <- x * iterfrac
-      res <- t(matrix(AllGenes, cai))
-      if (mode=='reverse') {
-        res <- t(sort(res, res -> res[2]))
-      }
-      else {
-        res <- t(sort(res, res -> -res[2]))
-    }
-  genes <- res[1][1:round(x * length(DB))]
+    x <- x * iterfrac
+    res <- rbind(AllGenes, cai)
+    res[1,order(mat[2,], decreasing = !reverse)]
+    genes <- res[1, 1:round(x * length(DB))]
   }
   return(RA)
 }

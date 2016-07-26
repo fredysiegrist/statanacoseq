@@ -4,15 +4,15 @@
 \alias{ComputeCarboneRA}
 \title{Compute Carbone Relative Adaptiveness}
 \usage{
-ComputeCarboneRA(t = 0.01, initfrac = 1, iterfrac = 0.5,
-  mode = "reverse", DB)
+ComputeCarboneRA(target = 0.05, initfrac = 1, iterfrac = 0.5,
+  reverse = FALSE, DB)
 }
 \arguments{
-\item{t}{nonnegative}
+\item{target}{nonnegative}
 
 \item{initfrac}{nonnegative}
 
-\item{mode}{"reverse" for standard anything else for non-standard}
+\item{reverse}{For standard anything else for non-standard}
 
 \item{DB}{Database with working genes of type Entires()}
 
@@ -57,7 +57,7 @@ RA
 end: } }
 }
 \examples{
-ComputeCarboneRA()
+ComputeCarboneRA(DB=mylist(whatout=1))
 
 }
 \author{
