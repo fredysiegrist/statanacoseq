@@ -4,10 +4,10 @@
 \alias{RelativeAdaptiveness}
 \title{Compute Relative Adaptiveness}
 \usage{
-RelativeAdaptiveness(entries = c2s(mylist(whatout = 1)))
+RelativeAdaptiveness(entries = mylist(whatout = 1))
 }
 \arguments{
-\item{entires}{list of positive integers}
+\item{entires}{List of Coding sequences or DNA string}
 }
 \value{
 Named (codons) numerical vector with relative adaptiveness for the 64 codons
@@ -21,7 +21,7 @@ the difference of w from seqinr and relative adaptiveness (w) from codonW (by Jo
 }
 \section{Original code in Darwin}{
 
-\subsection{Compute CAI, the Codon Adaptation Index (Sharp and Li 1987)}{\preformatted{
+\subsection{Compute Relative Adaptiveness as codonW (by John Peden)}{\preformatted{
 RelativeAdaptiveness := proc(entries:list(posint))
  CodonCounts := CreateArray(1..64);
  for i in entries do

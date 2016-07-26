@@ -7,7 +7,7 @@
 #' Should compute the same RA as in Darwin and should not have an error higher than (5e-04)
 #' the difference of w from seqinr and relative adaptiveness (w) from codonW (by John Peden).
 #'
-#' @param entires list of positive integers
+#' @param entires List of Coding sequences or DNA string
 
 #' @return Named (codons) numerical vector with relative adaptiveness for the 64 codons
 #'
@@ -21,7 +21,7 @@
 #'
 #' @export
 #' @section Original code in Darwin:
-#' \subsection{Compute CAI, the Codon Adaptation Index (Sharp and Li 1987)}{\preformatted{
+#' \subsection{Compute Relative Adaptiveness as codonW (by John Peden)}{\preformatted{
 #' RelativeAdaptiveness := proc(entries:list(posint))
 #'  CodonCounts := CreateArray(1..64);
 #'  for i in entries do
@@ -50,10 +50,11 @@
 #'      RA[i] := 1; od;
 #'  RA
 #' end: } }
-RelativeAdaptiveness <- function(entries=c2s(mylist(whatout=1))) {
+RelativeAdaptiveness <- function(entries=mylist(whatout=1)) {
   CodonCounts <- aa_ac
   for (i in 1:length(entries)) {
     dna <- c2s(entries[[i]])
+    if(!(checkCDS(dna))) stop("non valid CDS)", call.=FALSE)
     for (j in seq(from=1, to=nchar(dna), by=3)) {
       codon <- substr(dna, j, j+2)
       cod <- reversecomplement(codon)
@@ -64,8 +65,7 @@ RelativeAdaptiveness <- function(entries=c2s(mylist(whatout=1))) {
   }
   RA <- aa_ac
   for (aa in 1:20) {
-    # warnings
-    suppressWarnings(a <- unique(a(substr(names(aa_ac), 1, 3)[c(-59, -60, -64, -65)]))[aa])
+    a <- unique(a(substr(names(aa_ac), 1, 3)[c(-59, -60, -64, -65)]))[aa]
     # warnings
     suppressWarnings(codons <-  na.omit(substr(names(CodonCounts)[a(substr(names(aa_ac), 1, 3))==a], 5, 7)))
     # warnings
