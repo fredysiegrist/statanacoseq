@@ -14,9 +14,9 @@
 #' @keywords CodonBias
 #' @examples
 #' CodonUsage('ATGTGGTACTCCGACTACGGAGGATAA')
+#' CodonUsage(mylist(whatout=1))
 #'
 #' @export
-
 CodonUsage <- function(cdslist=mylist()) {
   if (!(is.list(cdslist))) {
     if(checkCDS(cdslist)) {

@@ -20,6 +20,7 @@ Creates a count table to decide on optimality of codons based on the usage of th
 }
 \examples{
 CodonUsage('ATGTGGTACTCCGACTACGGAGGATAA')
+CodonUsage(mylist(whatout=1))
 
 }
 \author{
