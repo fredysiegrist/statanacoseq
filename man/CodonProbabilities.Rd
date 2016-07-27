@@ -4,7 +4,7 @@
 \alias{CodonProbabilities}
 \title{Codon Probabilities}
 \usage{
-CodonProbabilities(entries = Entries())
+CodonProbabilities(entries = mylist(whatout = 1))
 }
 \arguments{
 \item{entries}{function for importing Entries() by default}

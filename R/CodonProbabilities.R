@@ -34,13 +34,15 @@
 #'  od;
 #'  res / DB[TotEntries]
 #' end: } }
-CodonProbabilities <- function(entries=Entries()) {
-  res <- 1:64
-  for (e in entries) {
-    occurs <- 1:64
-    dna <- SearchTag('DNA', e)
+CodonProbabilities <- function(entries=mylist(whatout=1)) {
+  res <- rep(0, times=65)
+  for (e in 1:length(entries)) {
+    dna <- c2s(entries[[e]])
+    if(!(checkCDS(dna))) stop("non valid CDS)", call.=FALSE)
+    occurs <- rep(0, times=65)
     for (c in seq(from=1, to=nchar(dna), by=3)) {
-      cint <- CodonToCInt(dna[c..c+2])
+      codon <- reversecomplement(substr(dna, c, c+2))
+      cint <- which(substr(names(aa_ac), 5, 7) %in% codon)
       occurs[cint] <- 1
     }
     res <- res + occurs
