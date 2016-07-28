@@ -4,7 +4,7 @@
 \alias{NucleotideContent}
 \title{Nucleotide Content}
 \usage{
-NucleotideContent(tD = as.list("", Entry()), pos = list(c(1, 2, 3)))
+NucleotideContent(tD = as.list("", Entries()), pos = c(1, 2, 3))
 }
 \arguments{
 \item{pos}{List of 3 positive integers for the nucleotide positions}
@@ -12,7 +12,7 @@ NucleotideContent(tD = as.list("", Entry()), pos = list(c(1, 2, 3)))
 \item{td}{Dictionary of String and Entry # nope probably either string or Entry type}
 }
 \value{
-o/n
+Vector of four fractions (for every base) of nucleotide content in all bases
 }
 \description{
 \code{NucleotideContent} Computes for a gene or a database entry the content of nucleotides
