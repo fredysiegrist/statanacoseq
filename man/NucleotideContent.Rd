@@ -4,7 +4,7 @@
 \alias{NucleotideContent}
 \title{Nucleotide Content}
 \usage{
-NucleotideContent(tD = as.list("", Entries()), pos = c(1, 2, 3))
+NucleotideContent(tD = mylist(whatout = 1), pos = c(1, 2, 3))
 }
 \arguments{
 \item{pos}{List of 3 positive integers for the nucleotide positions}
@@ -48,8 +48,10 @@ NucleotideContent := proc( ; tD:{string, Entry}, pos=[1,2,3]:list(posint)) -> li
 end: } }
 }
 \examples{
-NucleotideContent('ATGTGGTACTCCGACTACGGAGGATAA')
-NucleotideContent(c2s(mylist(whatout=1)[[1]]))
+NucleotideContent('ATGTGGTACTCCGACTACGGAGGATAA', pos=c(1,2))
+NucleotideContent(list("ABCDEFG", "ACGGCCGACGGTGT"), pos=3)
+NucleotideContent(toupper(c2s(mylist(whatout=1)[[1]])))
+NucleotideContent(pos=c(3))
 
 }
 \author{

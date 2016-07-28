@@ -14,8 +14,10 @@
 #' @seealso \code{\link{seqinr}} \code{\link{statanacoseq}} \code{\link{readstats}}
 #' @keywords CodonBias
 #' @examples
-#' NucleotideContent('ATGTGGTACTCCGACTACGGAGGATAA')
-#' NucleotideContent(c2s(mylist(whatout=1)[[1]]))
+#' NucleotideContent('ATGTGGTACTCCGACTACGGAGGATAA', pos=c(1,2))
+#' NucleotideContent(list("ABCDEFG", "ACGGCCGACGGTGT"), pos=3)
+#' NucleotideContent(toupper(c2s(mylist(whatout=1)[[1]])))
+#' NucleotideContent(pos=c(3))
 #'
 #' @import seqinr
 #'
@@ -45,15 +47,19 @@
 #'  fi;
 #'  return(o/n);
 #' end: } }
-NucleotideContent <- function( tD=as.list("", Entries()), pos=c(1,2,3)) {
+NucleotideContent <- function(tD=mylist(whatout=1), pos=c(1,2,3)) {
   bases <- c("A", "C", "G", "T")
   o <- rep(0, times=4)
   names(o) <- bases
   n <- 0
-  if (missing(tD)) {
-    for (z in 1:length(DB)) {
-      d <- toupper(c2s(entries[[z]]))
-      for (i1 in seq(from=1, to=abs(nchar(d)-max(pos)), by=3)) {
+  if (is.null(tD)) { # if (missing(tD)) {
+    td <- mylist(whatout=1)
+  }
+  if (class(tD)== "list") {
+    for (z in 1:length(tD)) {
+      d <- toupper(c2s(tD[[z]]))
+      i <- 0
+      for (i1 in seq(from=0, to=abs(nchar(d)-max(pos)), by=3)) {
         for (i2 in pos) {
           i <- i1+i2
           n <- n+1
@@ -64,13 +70,17 @@ NucleotideContent <- function( tD=as.list("", Entries()), pos=c(1,2,3)) {
   }
 # if Entry type will be defined as in Darwin use this convertion
 #  else if type(tD, Entry) then d:=SearchTag('DNA', tD)
-  else d <- tD
-  for (i1 in seq(from=1, to=abs(nchar(d)-max(pos)), by=3)) {
-    for (i2 in pos) {
-      i <- i1+i2
-      n <- n+1
-      o[s2c(d)[i]] <- o[s2c(d)[i]]+1
+  else {
+    if (class(tD) == "character") {
+      d <- tD
+      for (i1 in seq(from=0, to=abs(nchar(d)-max(pos)), by=3)) {
+        for (i2 in pos) {
+          i <- i1+i2
+          n <- n+1
+          o[s2c(d)[i]] <- o[s2c(d)[i]]+1
+        }
+      }
     }
   }
-  return(o/n)
+  return((o/n)[1:4])
 }
