@@ -5,7 +5,7 @@
 \title{Compute Carbone Relative Adaptiveness}
 \usage{
 ComputeCarboneRA(target = 0.05, initfrac = 1, iterfrac = 0.5,
-  reverse = FALSE, DB)
+  reverse = FALSE, DB = mylist(whatout = 1))
 }
 \arguments{
 \item{target}{nonnegative}
