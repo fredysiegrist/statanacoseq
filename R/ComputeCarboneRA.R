@@ -47,10 +47,10 @@
 #'  od;
 #' RA
 #' end: } }
-ComputeCarboneRA <- function(target=0.05, initfrac=1, iterfrac=0.5, reverse=FALSE, DB) {
+ComputeCarboneRA <- function(target=0.05, initfrac=1, iterfrac=0.5, reverse=FALSE, DB=mylist(whatout=1)) {
   if (!(is.double(target) && length(target)==1 && target>(1/length(DB)) && target<1)) stop('target must be a positive number between 1/length(DB) and 1', call.=FALSE)
   RA <- NA
-  if(missing(DB)) stop('DB must be assigned', call.=FALSE)
+  # missing isn't working anymore if(missing(DB)) stop('DB must be assigned', call.=FALSE)
   x <- 1  # fraction of the sequences used to compute RA in this iteration
   AllGenes <- 1:length(DB)
   genes <- sample(AllGenes, round(initfrac * length(DB)))
@@ -64,8 +64,10 @@ ComputeCarboneRA <- function(target=0.05, initfrac=1, iterfrac=0.5, reverse=FALS
     }
     x <- x * iterfrac
     res <- rbind(AllGenes, cai)
-    res[1,order(mat[2,], decreasing = !reverse)]
+    res[1,order(res[2,], decreasing = !reverse)]
     genes <- res[1, 1:round(x * length(DB))]
   }
   return(RA)
 }
+# db2 <- list(as.SeqFastadna(s2c(tolower("ATGCCGCCACCTAACTGA")), "1", "seq1"), as.SeqFastadna(s2c(tolower("ATGGGGCCGCCATAG")), "2", "seq2"), as.SeqFastadna(s2c(tolower("ATGTCCCCGCGCGGCGTGAGGAGTTCATGA")), "3", "seq3"))
+# ComputeCarboneRA(target=0.5, DB=db2)
