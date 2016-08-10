@@ -4,10 +4,11 @@
 #' \code{ComputeGC3syn} Computes the G+C content 3rd position of synonymous codons
 #'
 #' @details
-#' Should compute the same CP as in Darwin
+#' Should compute the same CP as in Darwin. By definition, GC3s values are the proportion of GC
+#' nucleotides at the variable third coding position of synonymous codons.
+#' This can be used to evaluate the degree of base composition bias.
 #'
-#' @param td Dictionary of String and Entry # nope probably either string or Entry type
-#' @param pos List of 3 positive integers for the nucleotide positions
+#' @param tD Nucleotide character string
 #' @return o/n
 #'
 #' @author Roth, A.; Friberg, M.; Siegrist, F. and Cannarozzi, G. M. \email{gina@@cannarozzi.com}
@@ -15,7 +16,8 @@
 #' @keywords CodonBias
 #' @examples
 #' ComputeGC3syn('ATGTGGTACTCCGACTACGGAGGATAA')
-#' ComputeGC3syn(c2s(mylist(whatout=1)[[1]]))
+# list arguments have to be properly implemented
+# ComputeGC3syn(c2s(mylist(whatout=1)[[1]]))
 #'
 #' @import seqinr
 #'
@@ -39,21 +41,23 @@
 #' end: } }
 ComputeGC3syn <- function(tD) {
   require(seqinr)
-  if(!(checkCDS(dna))) stop("non valid CDS)", call.=FALSE)
+  if(!(checkCDS(tD))) stop("non valid CDS)", call.=FALSE)
   # remove stop codon
-  if (tD[length(td)-2:length(td)] %in% substr(names(aa_ac), 5, 7)[c(59, 60, 64, 65)]) {
-    d <- td[1:-4]
+  if (c2s(s2c(tD)[(nchar(tD)-2):nchar(tD)]) %in% substr(names(aa_ac), 5, 7)[c(59, 60, 64, 65)]) {
+    d <- substring(tD, 1, nchar(tD)-2)
   }
   else {
     d <- tD
   }
-  o <- 1:4
+  bases <- c("A", "C", "G", "T")
+  o <- rep(0, times=4)
+  names(o) <- bases
   n <-0
-  for (i in seq(from=1, to=length(d), by=3)) {
-    c <- d[i:i+2]
-    if (length(IntToCInt(CodonToInt(c)))>1) {
+  for (i in seq(from=1, to=nchar(d), by=3)) {
+    c <- substring(d, i, i+2)
+    if (c %in% substr(names(aa_ac), 5, 7)[c(-59, -60, -64, -65)]) {
       n <- n+1
-      oi <- BToInt(c[3])
+      oi <- which(names(o) %in% substring(c, 3))
       o[oi] <- o[oi]+1
     }
   }

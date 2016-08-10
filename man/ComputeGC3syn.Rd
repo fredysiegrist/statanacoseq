@@ -7,9 +7,7 @@
 ComputeGC3syn(tD)
 }
 \arguments{
-\item{td}{Dictionary of String and Entry # nope probably either string or Entry type}
-
-\item{pos}{List of 3 positive integers for the nucleotide positions}
+\item{tD}{Nucleotide character string}
 }
 \value{
 o/n
@@ -18,7 +16,9 @@ o/n
 \code{ComputeGC3syn} Computes the G+C content 3rd position of synonymous codons
 }
 \details{
-Should compute the same CP as in Darwin
+Should compute the same CP as in Darwin. By definition, GC3s values are the proportion of GC
+nucleotides at the variable third coding position of synonymous codons.
+This can be used to evaluate the degree of base composition bias.
 }
 \section{Original code in Darwin}{
 
@@ -41,7 +41,6 @@ end: } }
 }
 \examples{
 ComputeGC3syn('ATGTGGTACTCCGACTACGGAGGATAA')
-ComputeGC3syn(c2s(mylist(whatout=1)[[1]]))
 
 }
 \author{
