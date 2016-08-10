@@ -38,8 +38,10 @@
 #'  return(o[2]+o[3]);
 #' end: } }
 ComputeGC3syn <- function(tD) {
+  require(seqinr)
+  if(!(checkCDS(dna))) stop("non valid CDS)", call.=FALSE)
   # remove stop codon
-  if (member(tD[-3:-1], AToCodon('$'))) { # introduce here the cds check and check for the stop codon missing warning
+  if (tD[length(td)-2:length(td)] %in% substr(names(aa_ac), 5, 7)[c(59, 60, 64, 65)]) {
     d <- td[1:-4]
   }
   else {
