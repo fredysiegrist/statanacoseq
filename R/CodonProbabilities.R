@@ -1,4 +1,4 @@
-#' @title Codon Probabilities
+ #' @title Codon Probabilities
 #'
 #' @description
 #' \code{CodonProbabilities} , for Each Codon, Computes the Probability that it Occurs at Least Once in a Gene
@@ -13,8 +13,8 @@
 #' @seealso \code{\link{seqinr}} \code{\link{statanacoseq}} \code{\link{readstats}}
 #' @keywords CodonBias
 #' @examples
-#' RSCU('ATGTGGTACTCCGACTACGGAGGATAA')
-#' RSCU(c2s(mylist(whatout=1)[[1]]))
+#' CodonProbabilities('ATGTGGTACTCCGACTACGGAGGATAA')
+#' CodonProbabilities(c2s(mylist(whatout=1)[[1]]))
 #'
 #' @import seqinr
 #'

@@ -36,8 +36,8 @@ CodonProbabilities := proc()
 end: } }
 }
 \examples{
-RSCU('ATGTGGTACTCCGACTACGGAGGATAA')
-RSCU(c2s(mylist(whatout=1)[[1]]))
+CodonProbabilities('ATGTGGTACTCCGACTACGGAGGATAA')
+CodonProbabilities(c2s(mylist(whatout=1)[[1]]))
 
 }
 \author{
